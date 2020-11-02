@@ -1,22 +1,19 @@
-import { createStore, applyMiddleware, combineReducers } from 'redux';
-import thunks from 'redux-thunk';
-import {createLogger} from 'redux-logger';
+import { createStore, applyMiddleware, combineReducers } from "redux";
+import thunks from "redux-thunk";
+import { createLogger } from "redux-logger";
 
-// schools
-import SchoolsReducer from './schools/reducer';
-import { getSchools } from './schools/thunks';
+import user from "./user/reducer";
+import { login, register } from "./user/thunks";
 
 const reducer = combineReducers({
-	schools: SchoolsReducer
+  user,
 });
 
-
-const store = createStore(reducer, applyMiddleware(thunks, createLogger({collapsed: true})));
-
+const store = createStore(
+  reducer,
+  applyMiddleware(thunks, createLogger({ collapsed: true }))
+);
 
 export default store;
 
-export {
-	getSchools,
-
-};
+export { login, register };

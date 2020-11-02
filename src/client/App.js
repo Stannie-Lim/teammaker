@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { HashRouter, Route } from "react-router-dom";
+import { HashRouter, Route, Switch } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
 // store
@@ -7,23 +7,17 @@ import { getSchools } from "./store/store";
 
 //components
 import Login from "./components/auth/Login";
+import Register from "./components/auth/Register";
 
 const App = () => {
-  // map dispatch
   const dispatch = useDispatch();
 
-  // componentdidmount
-  useEffect(() => {
-    // load data
-    dispatch(getSchools());
-  });
-
-  // mapstate
-  const schools = useSelector(({ schools }) => schools);
+  useEffect(() => {});
 
   return (
     <HashRouter>
-      <Route path="/" component={Login} />
+      <Route path="/login" component={Login} />
+      <Route path="/register" component={Register} />
     </HashRouter>
   );
 };

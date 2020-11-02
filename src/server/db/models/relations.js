@@ -1,7 +1,7 @@
-// const x = require('./x');
+const User = require("./User");
 
 // x.belongsTo(x);
 
 module.exports = {
-  // x
+  User,
 };

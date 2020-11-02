@@ -1,26 +1,25 @@
 import React, { useState } from "react";
 
 // css
-import "./login.css";
+import "register.css";
 
 // store
-import { login } from "../../store/store";
-import { useDispatch } from "react-redux";
+import { register } from "../../store/store";
 
-const Login = () => {
+const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const dispatch = useDispatch();
 
-  const signin = (ev) => {
+  const registerNewAccount = (ev) => {
     ev.preventDefault();
-    dispatch(login(email, password));
+    dispatch(register(email, password));
   };
 
   return (
     <div className="login">
-      <form onSubmit={signin}>
+      <form onSubmit={registerNewAccount}>
         <input
           type="text"
           onChange={({ target }) => setEmail(target.value)}
@@ -39,4 +38,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;

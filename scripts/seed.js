@@ -1,11 +1,11 @@
-const { db /* models here */ } = require("../src/server/db/models");
+const { db, User } = require("../src/server/db/models");
 
 const seed = async () => {
   await db.sync({ force: true });
   console.log("seeding");
 
   try {
-    console.log("idk seed something here");
+    await User.create({ email: "test", password: "test" });
   } catch (err) {
     console.log(err);
   }
