@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { HashRouter, Route, Switch } from "react-router-dom";
+import { HashRouter, Redirect, Route, Switch } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
 // store
@@ -16,6 +16,7 @@ const App = () => {
 
   return (
     <HashRouter>
+      <Route exact path="/" render={() => <Redirect to="/login" />} />
       <Route path="/login" component={Login} />
       <Route path="/register" component={Register} />
     </HashRouter>

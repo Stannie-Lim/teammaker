@@ -1,7 +1,8 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 
 // css
-import "register.css";
+import "./register.css";
 
 // store
 import { register } from "../../store/store";

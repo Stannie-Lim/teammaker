@@ -1,10 +1,10 @@
 import { _login, _register } from "./actions";
-import { AxiosHttpRequest } from "../../utils/axios";
+import { AxiosHttpRequest, setJWT } from "../../utils/axios";
 
 export const login = (email, password) => {
   return async (dispatch) => {
     try {
-      const { token } = (
+      const token = (
         await AxiosHttpRequest("POST", "/api/auth/login", { email, password })
       ).data;
       console.log(token);
@@ -18,13 +18,13 @@ export const login = (email, password) => {
 export const register = (email, password) => {
   return async (dispatch) => {
     try {
-      const { token } = (
+      const token = (
         await AxiosHttpRequest("POST", "/api/auth/register", {
           email,
           password,
         })
       ).data;
-      console.log(token);
+      setJWT(token);
       // dispatch(_login(tempdata));
     } catch (err) {
       console.log(err);

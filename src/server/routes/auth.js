@@ -1,15 +1,11 @@
 const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
-const dotenv = require("dotenv");
-
 const router = require("express").Router();
 module.exports = router;
 
+const { generateJWT } = require("../common/auth");
+
 // models
 const { User } = require("../db/models");
-
-// env
-dotenv.config();
 
 // root route is /api/auth
 
@@ -21,6 +17,16 @@ router.post("/login", async (req, res, next) => {
     if (!user) {
       res.status(403).json({ message: "No user exists " });
     }
+
+    const hashedPassword = user.password;
+    const isCorrectPassword = bcrypt.compareSync(password, hashedPassword);
+
+    if (!isCorrectPassword) {
+      res.status(403).json({ message: "Invalid credentials" });
+    }
+
+    const token = generateJWT({ id: user.id, email });
+    res.send(token);
   } catch (err) {
     next(err);
   }
@@ -29,14 +35,17 @@ router.post("/login", async (req, res, next) => {
 router.post("/register", async (req, res, next) => {
   const { email, password } = req.body;
   try {
-    const user = await User.findOne({ where: { email } });
+    const tryToFindUser = await User.findOne({ where: { email } });
 
-    if (user) {
+    if (tryToFindUser) {
       res.status(403).json({ message: "User already exists " });
     }
 
     const hashedPassword = bcrypt.hashSync(password, 15);
-    console.log(hashedPassword);
+    const user = await User.create({ email, password: hashedPassword });
+
+    const token = generateJWT({ id: user.id, email });
+    res.send(token);
   } catch (err) {
     next(err);
   }
