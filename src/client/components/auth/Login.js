@@ -20,7 +20,7 @@ const Login = () => {
   };
 
   return (
-    <div className="login">
+    <div className="authform">
       <form onSubmit={signin}>
         <input
           type="text"
@@ -36,7 +36,7 @@ const Login = () => {
         />
         <button>Sign in</button>
         <h1>
-          No account? <Link to="register">Click here</Link> to sign in!
+          No account? <Link to="register">Click here</Link> to register!
         </h1>
       </form>
     </div>

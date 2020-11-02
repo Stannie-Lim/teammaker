@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 
 // css
 import "./register.css";
@@ -19,7 +20,7 @@ const Register = () => {
   };
 
   return (
-    <div className="login">
+    <div className="authform">
       <form onSubmit={registerNewAccount}>
         <input
           type="text"
@@ -33,7 +34,11 @@ const Register = () => {
           value={password}
           placeholder="Password"
         />
-        <button>Sign in</button>
+        <button>Register</button>
+        <h1>
+          Already have an account? <Link to="login">Click here</Link> to sign
+          in!
+        </h1>
       </form>
     </div>
   );

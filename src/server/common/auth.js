@@ -1,5 +1,6 @@
-const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 dotenv.config();
 
@@ -11,6 +12,11 @@ const generateJWT = ({ id, email }) => {
   );
 };
 
+const checkPassword = (password, hashedPassword) => {
+  return bcrypt.compareSync(password, hashedPassword);
+};
+
 module.exports = {
   generateJWT,
+  checkPassword,
 };

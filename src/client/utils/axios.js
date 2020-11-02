@@ -44,3 +44,8 @@ export const AxiosHttpRequest = async (method, url, data) => {
       break;
   }
 };
+
+export const getMe = async () => {
+  const user = (await AxiosHttpRequest("GET", "/api/auth/me")).data;
+  return user;
+};

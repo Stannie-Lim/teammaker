@@ -2,7 +2,8 @@ const bcrypt = require("bcrypt");
 const router = require("express").Router();
 module.exports = router;
 
-const { generateJWT } = require("../common/auth");
+const { generateJWT, checkPassword } = require("../common/auth");
+const { isLoggedIn } = require("../common/middleware");
 
 // models
 const { User } = require("../db/models");
@@ -19,7 +20,7 @@ router.post("/login", async (req, res, next) => {
     }
 
     const hashedPassword = user.password;
-    const isCorrectPassword = bcrypt.compareSync(password, hashedPassword);
+    const isCorrectPassword = checkPassword(password, hashedPassword);
 
     if (!isCorrectPassword) {
       res.status(403).json({ message: "Invalid credentials" });
@@ -46,6 +47,21 @@ router.post("/register", async (req, res, next) => {
 
     const token = generateJWT({ id: user.id, email });
     res.send(token);
+  } catch (err) {
+    next(err);
+  }
+});
+
+router.get("/me", isLoggedIn, async (req, res, next) => {
+  try {
+    const { email } = req.user;
+    const user = await User.findOne({
+      where: { email },
+      attributes: {
+        exclude: ["password"],
+      },
+    });
+    res.send(user);
   } catch (err) {
     next(err);
   }
