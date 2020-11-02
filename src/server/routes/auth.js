@@ -26,7 +26,8 @@ router.post("/login", async (req, res, next) => {
       res.status(403).json({ message: "Invalid credentials" });
     }
 
-    const token = generateJWT({ id: user.id, email });
+    const { firstName, lastName, id } = user;
+    const token = generateJWT({ firstName, lastName, id, email });
     res.send(token);
   } catch (err) {
     next(err);
@@ -34,7 +35,7 @@ router.post("/login", async (req, res, next) => {
 });
 
 router.post("/register", async (req, res, next) => {
-  const { email, password } = req.body;
+  const { email, firstName, lastName, password } = req.body;
   try {
     const tryToFindUser = await User.findOne({ where: { email } });
 
@@ -43,9 +44,19 @@ router.post("/register", async (req, res, next) => {
     }
 
     const hashedPassword = bcrypt.hashSync(password, 15);
-    const user = await User.create({ email, password: hashedPassword });
+    const user = await User.create({
+      firstName,
+      lastName,
+      email,
+      password: hashedPassword,
+    });
 
-    const token = generateJWT({ id: user.id, email });
+    const token = generateJWT({
+      firstName: user.firstName,
+      lastName: user.lastName,
+      id: user.id,
+      email,
+    });
     res.send(token);
   } catch (err) {
     next(err);

@@ -10,18 +10,32 @@ import { register } from "../../store/store";
 
 const Register = () => {
   const [email, setEmail] = useState("");
+  const [lastName, setLastName] = useState("");
   const [password, setPassword] = useState("");
+  const [firstName, setFirstName] = useState("");
 
   const dispatch = useDispatch();
 
   const registerNewAccount = (ev) => {
     ev.preventDefault();
-    dispatch(register(email, password));
+    dispatch(register(firstName, lastName, email, password));
   };
 
   return (
     <div className="authform">
       <form onSubmit={registerNewAccount}>
+        <input
+          type="text"
+          onChange={({ target }) => setFirstName(target.value)}
+          value={firstName}
+          placeholder="First Name"
+        />
+        <input
+          type="text"
+          onChange={({ target }) => setLastName(target.value)}
+          value={lastName}
+          placeholder="Last Name"
+        />
         <input
           type="text"
           onChange={({ target }) => setEmail(target.value)}

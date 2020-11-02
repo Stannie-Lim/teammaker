@@ -2,23 +2,30 @@ import React, { useState, useEffect } from "react";
 import { HashRouter, Redirect, Route, Switch } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
-// store
-import { getSchools } from "./store/store";
+// authenticated route
+import AuthenticatedRoute from "./AuthenticatedRoute";
 
-//components
+// components
 import Login from "./components/auth/Login";
 import Register from "./components/auth/Register";
 
-const App = () => {
-  const dispatch = useDispatch();
+// authed components
+import Home from "./components/dashboard/Home";
 
-  useEffect(() => {});
+const App = () => {
+  const isLoggedIn = useSelector(({ user }) => !!user.id);
 
   return (
     <HashRouter>
       <Route exact path="/" render={() => <Redirect to="/login" />} />
       <Route path="/login" component={Login} />
       <Route path="/register" component={Register} />
+      <AuthenticatedRoute
+        isLoggedIn={isLoggedIn}
+        exact={true}
+        path="/home"
+        component={Home}
+      />
     </HashRouter>
   );
 };

@@ -5,7 +5,12 @@ const seed = async () => {
   console.log("seeding");
 
   try {
-    await User.create({ email: "test", password: "test" });
+    await User.create({
+      firstName: "test",
+      lastName: "test",
+      email: "test",
+      password: "test",
+    });
   } catch (err) {
     console.log(err);
   }

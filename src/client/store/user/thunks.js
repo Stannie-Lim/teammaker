@@ -8,24 +8,23 @@ export const login = (email, password) => {
         await AxiosHttpRequest("POST", "/api/auth/login", { email, password })
       ).data;
       setJWT(token);
-      console.log(await getMe());
-      // dispatch(_login(tempdata));
+      const user = await getMe();
+      dispatch(_login(user));
     } catch (err) {
       console.log(err);
     }
   };
 };
 
-export const register = (email, password) => {
-  return async (dispatch) => {
+export const register = (firstName, lastName, email, password) => {
+  return async () => {
     try {
-      const token = (
-        await AxiosHttpRequest("POST", "/api/auth/register", {
-          email,
-          password,
-        })
-      ).data;
-      setJWT(token);
+      await AxiosHttpRequest("POST", "/api/auth/register", {
+        firstName,
+        lastName,
+        email,
+        password,
+      });
       login(email, password);
     } catch (err) {
       console.log(err);
