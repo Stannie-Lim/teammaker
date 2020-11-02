@@ -55,6 +55,7 @@
   },
   "devDependencies": {
     "babel-eslint": "^10.1.0",
+    "css-loader": "^5.0.0",
     "eslint": "^7.4.0",
     "eslint-config-fullstack": "^6.0.0",
     "eslint-config-prettier": "^6.11.0",
@@ -62,6 +63,7 @@
     "husky": "^4.2.5",
     "lint-staged": "^10.2.11",
     "morgan": "^1.10.0",
-    "prettier": "^2.0.5"
+    "prettier": "^2.0.5",
+    "style-loader": "^2.0.0"
   }
 }
