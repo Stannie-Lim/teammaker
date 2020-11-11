@@ -3,7 +3,7 @@ import thunks from "redux-thunk";
 import { createLogger } from "redux-logger";
 
 import user from "./user/reducer";
-import { login, register } from "./user/thunks";
+import { login, register, signout } from "./user/thunks";
 
 const reducer = combineReducers({
   user,
@@ -16,4 +16,4 @@ const store = createStore(
 
 export default store;
 
-export { login, register };
+export { login, register, signout };

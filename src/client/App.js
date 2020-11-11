@@ -1,6 +1,10 @@
+import { getJWT } from "./utils/axios";
 import React, { useState, useEffect } from "react";
-import { HashRouter, Redirect, Route, Switch } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
+import { HashRouter, Redirect, Route, Switch } from "react-router-dom";
+
+// store
+import { login } from "./store/store";
 
 // authenticated route
 import AuthenticatedRoute from "./AuthenticatedRoute";
@@ -13,19 +17,18 @@ import Register from "./components/auth/Register";
 import Home from "./components/dashboard/Home";
 
 const App = () => {
-  const isLoggedIn = useSelector(({ user }) => !!user.id);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    const jwt = getJWT();
+    dispatch(login("", "", jwt));
+  });
 
   return (
     <HashRouter>
       <Route exact path="/" render={() => <Redirect to="/login" />} />
       <Route path="/login" component={Login} />
       <Route path="/register" component={Register} />
-      <AuthenticatedRoute
-        isLoggedIn={isLoggedIn}
-        exact={true}
-        path="/home"
-        component={Home}
-      />
+      <AuthenticatedRoute exact={true} path="/home" component={Home} />
     </HashRouter>
   );
 };

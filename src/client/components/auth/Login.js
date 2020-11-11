@@ -1,12 +1,14 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { setJWT, getMe } from "../../utils/axios";
+import React, { useState, useEffect } from "react";
+import { Link, Redirect } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 
 // css
 import "./login.css";
 
 // store
 import { login } from "../../store/store";
-import { useDispatch } from "react-redux";
+import { _login } from "../../store/user/actions";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -18,6 +20,11 @@ const Login = () => {
     ev.preventDefault();
     dispatch(login(email, password));
   };
+
+  const isLoggedIn = useSelector(({ user }) => !!user.id);
+  if (isLoggedIn) {
+    return <Redirect to="/home" />;
+  }
 
   return (
     <div className="authform">

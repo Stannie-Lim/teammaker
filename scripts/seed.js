@@ -1,3 +1,4 @@
+const bcrypt = require("bcrypt");
 const { db, User } = require("../src/server/db/models");
 
 const seed = async () => {
@@ -9,7 +10,7 @@ const seed = async () => {
       firstName: "test",
       lastName: "test",
       email: "test",
-      password: "test",
+      password: bcrypt.hashSync("test", 15),
     });
   } catch (err) {
     console.log(err);

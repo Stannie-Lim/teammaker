@@ -1,6 +1,6 @@
 const Sequelize = require("sequelize");
 const db = new Sequelize(
-  process.env.DATABASE_URL || "postgres://localhost/idk_make_a_db"
+  process.env.DATABASE_URL || "postgres://localhost/teammaker"
 );
 
 module.exports = db;

@@ -1,6 +1,6 @@
 const Sequelize = require("sequelize");
 const db = require("../db");
-const { UUID, UUIDV4, INTEGER, STRING } = Sequelize;
+const { UUID, UUIDV4, INTEGER, STRING, VIRTUAL } = Sequelize;
 
 const User = db.define("user", {
   id: {
@@ -34,6 +34,12 @@ const User = db.define("user", {
     allowNull: false,
     validate: {
       notEmpty: true,
+    },
+  },
+  fullName: {
+    type: VIRTUAL,
+    get() {
+      return `${this.firstName} ${this.lastName}`;
     },
   },
 });
