@@ -1,6 +1,8 @@
 import { getJWT } from "./utils/axios";
+import { DndProvider } from "react-dnd";
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { HTML5Backend } from "react-dnd-html5-backend";
 import { HashRouter, Redirect, Route, Switch } from "react-router-dom";
 
 // store
@@ -24,12 +26,14 @@ const App = () => {
   });
 
   return (
-    <HashRouter>
-      <Route exact path="/" render={() => <Redirect to="/login" />} />
-      <Route path="/login" component={Login} />
-      <Route path="/register" component={Register} />
-      <AuthenticatedRoute exact={true} path="/home" component={Home} />
-    </HashRouter>
+    <DndProvider backend={HTML5Backend}>
+      <HashRouter>
+        <Route exact path="/" render={() => <Redirect to="/login" />} />
+        <Route path="/login" component={Login} />
+        <Route path="/register" component={Register} />
+        <AuthenticatedRoute exact={true} path="/home" component={Home} />
+      </HashRouter>
+    </DndProvider>
   );
 };
 
